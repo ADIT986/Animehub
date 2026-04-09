@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Violation hub — Nonton Anime & Baca Manga free </title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #08060f;
+  --bg2:     #0d0a1a;
+  --bg3:     #130f24;
+  --card:    #150f2a;
+  --card2:   #1c1535;
+  --border:  rgba(138,43,226,0.25);
+  --p1:      #8a2be2;
+  --p2:      #b44fff;
+  --p3:      #d580ff;
+  --acc:     #e040fb;
+  --acc2:    #ce93d8;
+  --neon:    #bf5fff;
+  --gold:    #ffd700;
+  --text:    #ece8f5;
+  --muted:   #7a6e96;
+  --glow:    0 0 24px rgba(138,43,226,0.5);
+  --glow2:   0 0 40px rgba(224,64,251,0.3);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans JP', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+body::before {
+  content:'';
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 10% 0%, rgba(138,43,226,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 90% 100%, rgba(180,79,255,0.1) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(224,64,251,0.04) 0%, transparent 60%);
+}
+
+body::after {
+  content:'';
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:
+    linear-gradient(rgba(138,43,226,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(138,43,226,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--p1);border-radius:3px;}
+
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:999;
+  display: flex; align-items:center; justify-content:space-between;
+  padding: 0 28px; height: 60px;
+  background: rgba(8,6,15,0.88);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.1rem;
+  background: linear-gradient(90deg, var(--p2), var(--acc));
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  text-decoration: none;
+  letter-spacing: 1px;
+  filter: drop-shadow(0 0 8px rgba(180,79,255,0.5));
+}
+
+.nav-tabs {
+  display: flex; gap: 4px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 4px;
+}
+
+.nav-tab {
+  padding: 7px 22px; border-radius: 24px;
+  border: none; background: none;
+  color: var(--muted); font-size: 0.85rem;
+  cursor: pointer; font-family: 'Rajdhani', sans-serif;
+  font-weight: 600; letter-spacing: 1px;
+  transition: all 0.25s;
+  text-transform: uppercase;
+}
+.nav-tab.active {
+  background: linear-gradient(135deg, var(--p1), var(--acc));
+  color: white;
+  box-shadow: var(--glow);
+}
+
+.nav-search {
+  display: flex; align-items: center;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 6px 14px; gap: 8px;
+  transition: border-color 0.2s;
+}
+.nav-search:focus-within { border-color: var(--p2); box-shadow: var(--glow); }
+.nav-search input {
+  background: none; border: none; outline: none;
+  color: var(--text); font-size: 0.85rem; width: 200px;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+.nav-search input::placeholder { color: var(--muted); }
+.nav-search button {
+  background: none; border: none; color: var(--p3);
+  cursor: pointer; font-size: 1rem; padding: 0;
+}
+
+.page { padding-top: 60px; min-height: 100vh; position: relative; z-index:1; }
+
+/* HERO SLIDER - DINAMIS */
+.hero { position: relative; height: 440px; overflow: hidden; }
+.hero-slides { position: relative; width:100%; height:100%; }
+.hero-slide {
+  position:absolute; inset:0;
+  opacity:0; transition: opacity 0.8s ease;
+}
+.hero-slide.active { opacity:1; }
+
+.hero-bg {
+  position:absolute; inset:0;
+  background-size:cover; background-position:center;
+  filter: brightness(0.3) saturate(1.6) hue-rotate(15deg);
+  transform:scale(1.04);
+  transition: transform 8s ease;
+}
+.hero-slide.active .hero-bg { transform:scale(1); }
+
+.hero-overlay {
+  position:absolute; inset:0;
+  background:
+    linear-gradient(to right, rgba(8,6,15,0.97) 30%, transparent 65%),
+    linear-gradient(to top, rgba(8,6,15,0.95) 0%, transparent 45%);
+}
+
+.hero-content {
+  position:relative; z-index:2;
+  padding: 60px 60px 40px;
+  display:flex; flex-direction:column;
+  justify-content:flex-end;
+  height:100%;
+  max-width: 560px;
+}
+
+.hero-tag {
+  display:inline-flex; align-items:center; gap:6px;
+  border: 1px solid var(--p2);
+  color: var(--p3);
+  background: rgba(138,43,226,0.15);
+  border-radius:4px; padding:3px 12px;
+  font-size:0.7rem; letter-spacing:2px;
+  text-transform:uppercase; font-family:'Rajdhani',sans-serif;
+  margin-bottom:12px; width:fit-content;
+}
+.hero-tag::before { content:''; width:6px;height:6px;border-radius:50%;background:var(--acc);animation:blink 1.4s infinite; }
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.hero-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 3rem; font-weight:700; line-height:1.05;
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+.hero-title .hl {
+  background: linear-gradient(90deg, var(--p2), var(--acc));
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+  filter: drop-shadow(0 0 10px rgba(180,79,255,0.6));
+}
+
+.hero-meta { display:flex; gap:16px; font-size:0.8rem; color:var(--muted); margin-bottom:10px; }
+.hero-meta .s { color: var(--gold); }
+.hero-desc { font-size:0.875rem; color:rgba(236,232,245,0.65); line-height:1.75; margin-bottom:20px; }
+.hero-btns { display:flex; gap:10px; }
+.btn-play {
+  display:flex; align-items:center; gap:8px;
+  background: linear-gradient(135deg, var(--p1), var(--acc));
+  border:none; border-radius:6px;
+  padding:11px 26px; color:white;
+  font-family:'Rajdhani',sans-serif; font-weight:700;
+  font-size:0.9rem; text-transform:uppercase; letter-spacing:1px;
+  cursor:pointer; transition:all 0.2s;
+  box-shadow: var(--glow);
+}
+.btn-play:hover { transform:translateY(-2px); box-shadow:var(--glow2); }
+.btn-more {
+  display:flex; align-items:center; gap:8px;
+  background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15);
+  border-radius:6px; padding:11px 22px; color:white;
+  font-family:'Rajdhani',sans-serif; font-size:0.9rem;
+  cursor:pointer; transition:all 0.2s; backdrop-filter:blur(8px);
+}
+.btn-more:hover { background:rgba(138,43,226,0.2); border-color:var(--p2); }
+
+.hero-indicators {
+  position:absolute; bottom:18px; left:60px;
+  display:flex; gap:8px; z-index:5;
+}
+.ind {
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(255,255,255,0.25);cursor:pointer;transition:all 0.3s;
+}
+.ind.active { width:28px;border-radius:4px;background:var(--acc); }
+
+.container { max-width:1320px;margin:0 auto;padding:0 28px; }
+section { padding:40px 0; }
+
+.sec-header {
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:24px;
+}
+.sec-title {
+  font-family:'Rajdhani',sans-serif;
+  font-size:1rem; font-weight:700;
+  text-transform:uppercase; letter-spacing:3px;
+  display:flex; align-items:center; gap:10px;
+}
+.sec-title::before {
+  content:'';width:3px;height:22px;border-radius:2px;
+  background:linear-gradient(to bottom,var(--p1),var(--acc));
+}
+.see-all {
+  color:var(--p3);font-size:0.75rem;letter-spacing:1px;
+  text-decoration:none;text-transform:uppercase;
+  cursor:pointer; transition:opacity 0.2s;
+}
+.see-all:hover{opacity:0.6;}
+
+.genre-row {
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;
+}
+.gp {
+  padding:6px 16px;border-radius:20px;
+  border:1px solid var(--border);background:var(--card);
+  color:var(--muted);font-size:0.78rem;cursor:pointer;
+  transition:all 0.2s; letter-spacing:0.5px;
+}
+.gp:hover,.gp.active {
+  background:linear-gradient(135deg,var(--p1),var(--acc));
+  border-color:transparent; color:white; box-shadow:var(--glow);
+}
+
+.anime-grid, .manga-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(165px,1fr));
+  gap:18px;
+}
+
+.anime-card {
+  border-radius:12px;overflow:hidden;
+  background:var(--card);cursor:pointer;
+  transition:transform 0.3s,box-shadow 0.3s;
+  border:1px solid rgba(138,43,226,0.12);
+  animation:cardIn 0.5s ease both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.anime-card:hover {
+  transform:translateY(-8px) scale(1.02);
+  box-shadow:0 20px 45px rgba(0,0,0,0.7), 0 0 0 1px var(--border), var(--glow);
+}
+
+.card-poster {
+  position:relative; aspect-ratio:2/3; overflow:hidden;
+}
+.card-poster img {
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.4s;
+  background:var(--bg3);
+}
+.anime-card:hover .card-poster img { transform:scale(1.06); }
+.card-poster-placeholder {
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:3.5rem;
+  background:linear-gradient(135deg,var(--bg3),var(--card2));
+}
+.cov {
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(8,6,15,0.92) 0%,transparent 55%);
+  opacity:0;transition:opacity 0.3s;
+  display:flex;align-items:center;justify-content:center;
+}
+.anime-card:hover .cov { opacity:1; }
+.play-circle {
+  width:50px;height:50px;border-radius:50%;
+  background:linear-gradient(135deg,var(--p1),var(--acc));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;
+  box-shadow:var(--glow);
+  transform:scale(0.7);transition:transform 0.3s;
+}
+.anime-card:hover .play-circle { transform:scale(1); }
+.cbadge {
+  position:absolute;top:8px;left:8px;
+  background:linear-gradient(135deg,var(--p1),var(--acc));
+  color:white;font-size:0.6rem;padding:3px 8px;
+  border-radius:3px;font-weight:700;letter-spacing:1px;
+  font-family:'Rajdhani',sans-serif;
+}
+.ceps {
+  position:absolute;top:8px;right:8px;
+  background:rgba(0,0,0,0.7);
+  color:var(--p3);font-size:0.68rem;padding:3px 8px;
+  border-radius:3px;backdrop-filter:blur(4px);
+}
+.card-info { padding:10px 10px 12px; }
+.card-info h3 {
+  font-size:0.82rem;font-weight:700;margin-bottom:5px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.card-meta {
+  display:flex;justify-content:space-between;
+  font-size:0.7rem;color:var(--muted);
+}
+.card-meta .cr { color:var(--gold); }
+
+.player-section {
+  margin:32px 0;
+  background:var(--card);
+  border-radius:16px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  box-shadow:var(--glow);
+  display:none;
+}
+.player-section.visible { display:block; }
+.player-head {
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;
+  border-bottom:1px solid rgba(138,43,226,0.15);
+  background:var(--bg3);
+}
+.player-head h3 {
+  font-family:'Rajdhani',sans-serif;font-size:1rem;
+  letter-spacing:2px;text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;
+}
+.live-dot {
+  width:8px;height:8px;border-radius:50%;
+  background:var(--acc);animation:blink 1.5s infinite;
+}
+.close-player {
+  background:rgba(255,255,255,0.08);border:none;
+  color:var(--text);font-size:1rem;cursor:pointer;
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.2s;
+}
+.close-player:hover { background:var(--p1); }
+.video-wrap {
+  position:relative;padding-bottom:56.25%;height:0;
+  background:#000;
+}
+.video-wrap iframe {
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  border:none;
+}
+.player-info { padding:16px 20px; }
+.player-info h2 {
+  font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;
+  margin-bottom:4px;
+  background:linear-gradient(90deg,var(--p3),var(--acc));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.player-info p { font-size:0.8rem;color:var(--muted); }
+.ep-scroll {
+  padding:0 20px 16px;
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+.ep-btn {
+  background:var(--card2);border:1px solid rgba(138,43,226,0.2);
+  color:var(--muted);border-radius:6px;
+  padding:5px 14px;font-size:0.78rem;cursor:pointer;
+  transition:all 0.2s;
+}
+.ep-btn:hover,.ep-btn.active {
+  background:linear-gradient(135deg,var(--p1),var(--acc));
+  border-color:transparent;color:white;box-shadow:var(--glow);
+}
+
+#mangaPanel { display:none; }
+#mangaPanel.visible { display:block; }
+.manga-search-row {
+  display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;
+}
+.manga-input {
+  flex:1;min-width:200px;
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;padding:10px 16px;
+  color:var(--text);font-size:0.9rem;
+  outline:none;
+}
+.manga-input:focus { border-color:var(--p2); }
+.btn-search {
+  background:linear-gradient(135deg,var(--p1),var(--acc));
+  border:none;border-radius:8px;padding:10px 22px;
+  color:white;font-family:'Rajdhani',sans-serif;
+  font-weight:700;font-size:0.9rem;cursor:pointer;
+  box-shadow:var(--glow);
+}
+.btn-search:hover{opacity:0.85;}
+
+.modal-overlay {
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.94);z-index:2000;
+  backdrop-filter:blur(12px);
+  align-items:flex-start;justify-content:center;
+  overflow-y:auto; padding:20px;
+}
+.modal-overlay.open { display:flex; }
+.manga-modal {
+  background:var(--bg2);
+  border-radius:16px;width:100%;max-width:820px;
+  border:1px solid var(--border);
+  box-shadow:0 40px 100px rgba(0,0,0,0.8),var(--glow);
+  animation:mIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  overflow:hidden;
+}
+@keyframes mIn{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}
+.modal-head {
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 22px;
+  border-bottom:1px solid rgba(138,43,226,0.2);
+  background:var(--bg3);
+  position:sticky;top:0;z-index:10;
+}
+.modal-head h2 {
+  font-family:'Rajdhani',sans-serif;font-size:1.1rem;
+  font-weight:700;
+  background:linear-gradient(90deg,var(--p3),var(--acc));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  max-width:500px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.close-modal {
+  background:rgba(255,255,255,0.08);border:none;
+  color:var(--text);font-size:1rem;cursor:pointer;
+  width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.close-modal:hover{background:var(--p1);}
+.modal-body { padding:20px 22px 30px; }
+.chap-list {
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;
+}
+.chap-btn {
+  background:var(--card2);border:1px solid rgba(138,43,226,0.2);
+  color:var(--muted);border-radius:6px;
+  padding:6px 14px;font-size:0.78rem;cursor:pointer;
+}
+.chap-btn:hover,.chap-btn.active {
+  background:linear-gradient(135deg,var(--p1),var(--acc));
+  border-color:transparent;color:white;box-shadow:var(--glow);
+}
+.chapter-viewer { display:flex;flex-direction:column;gap:6px;margin-top:16px; }
+.chapter-viewer img {
+  width:100%;border-radius:6px;display:block;
+  border:1px solid rgba(138,43,226,0.1);
+}
+.nav-arrows {
+  display:flex;justify-content:center;gap:12px;margin:20px 0 0;
+}
+.arr-btn {
+  background:var(--card2);border:1px solid var(--border);
+  color:var(--text);border-radius:8px;
+  padding:9px 20px;font-size:0.82rem;cursor:pointer;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:600;
+}
+.arr-btn:hover { background:var(--p1);border-color:var(--p1);box-shadow:var(--glow); }
+.arr-btn:disabled { opacity:0.3;cursor:not-allowed; }
+
+.spinner {
+  display:flex;align-items:center;justify-content:center;
+  padding:60px; flex-direction:column; gap:16px;
+}
+.spin {
+  width:40px;height:40px;border-radius:50%;
+  border:3px solid rgba(138,43,226,0.2);
+  border-top-color:var(--p2);
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin-label { font-size:0.8rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase; }
+
+.stats-row {
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:16px;margin:32px 0;
+}
+.stat-box {
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:20px;text-align:center;
+}
+.stat-box:hover { border-color:var(--p2); }
+.stat-n {
+  font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;
+  background:linear-gradient(90deg,var(--p2),var(--acc));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 8px rgba(180,79,255,0.4));
+}
+.stat-l { font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-top:4px; }
+
+.toast {
+  position:fixed;bottom:20px;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--card2);border:1px solid var(--p2);
+  border-radius:8px;padding:10px 22px;
+  color:var(--text);font-size:0.85rem;z-index:9999;
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow:var(--glow); display:flex;align-items:center;gap:8px;
+  pointer-events:none;
+}
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+footer {
+  background:var(--bg2);
+  border-top:1px solid rgba(138,43,226,0.15);
+  padding:28px 0;margin-top:40px;
+  text-align:center;
+  font-size:0.8rem;color:var(--muted);
+}
+footer span { color:var(--p3); }
+
+@media(max-width:900px){
+  .nav-search{display:none;}
+  .stats-row{grid-template-columns:repeat(2,1fr);}
+  .hero-content{padding:40px 24px 30px;}
+  .hero-title{font-size:2.2rem;}
+}
+@media(max-width:600px){
+  nav{padding:0 14px;}
+  .logo{font-size:0.9rem;}
+  .nav-tab{padding:6px 14px;font-size:0.75rem;}
+  .anime-grid,.manga-grid{grid-template-columns:repeat(3,1fr);gap:10px;}
+  .hero-title{font-size:1.7rem;}
+  .hero-btns{flex-direction:column;gap:8px;}
+  .stats-row{grid-template-columns:repeat(2,1fr);}
+  .hero-indicators{left:20px;}
+  .hero-content{padding:30px 20px 24px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#">✦ AniMangaVerse</a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tabAnimeBtn" onclick="switchTab('anime')">▶ Anime</button>
+    <button class="nav-tab" id="tabMangaBtn" onclick="switchTab('manga')">📖 Manga</button>
+  </div>
+  <div class="nav-search">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:var(--muted)"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="navSearch" placeholder="Cari anime / manga...">
+    <button onclick="doNavSearch()">→</button>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="hero" id="animeHero">
+    <div class="hero-slides" id="heroSlides"></div>
+    <div class="hero-indicators" id="heroIndicators"></div>
+  </div>
+
+  <div id="animePanel">
+    <div class="container">
+      <div class="stats-row">
+        <div class="stat-box"><div class="stat-n" id="totalAnimeCount">--</div><div class="stat-l">Judul Anime</div></div>
+        <div class="stat-box"><div class="stat-n" id="totalEpisodeCount">--</div><div class="stat-l">Episode</div></div>
+        <div class="stat-box"><div class="stat-n">TOP 50</div><div class="stat-l">Ranking MyAnimeList</div></div>
+        <div class="stat-box"><div class="stat-n">Live</div><div class="stat-l">Data Realtime API</div></div>
+      </div>
+
+      <div class="genre-row" id="genreRow">
+        <button class="gp active" data-q="popular" onclick="filterGenre(this,'popular','top')">🔥 Semua</button>
+        <button class="gp" data-q="action" onclick="filterGenre(this,'action','search')">⚔️ Action</button>
+        <button class="gp" data-q="fantasy" onclick="filterGenre(this,'fantasy','search')">🔮 Fantasy</button>
+        <button class="gp" data-q="romance" onclick="filterGenre(this,'romance','search')">💕 Romance</button>
+        <button class="gp" data-q="horror" onclick="filterGenre(this,'horror','search')">👻 Horror</button>
+        <button class="gp" data-q="comedy" onclick="filterGenre(this,'comedy','search')">😄 Comedy</button>
+        <button class="gp" data-q="isekai" onclick="filterGenre(this,'isekai','search')">🌀 Isekai</button>
+        <button class="gp" data-q="sports" onclick="filterGenre(this,'sports','search')">⚽ Sports</button>
+        <button class="gp" data-q="mecha" onclick="filterGenre(this,'mecha','search')">🤖 Mecha</button>
+        <button class="gp" data-q="psychological" onclick="filterGenre(this,'psychological','search')">🧠 Psikologi</button>
+        <button class="gp" data-q="slice of life" onclick="filterGenre(this,'slice of life','search')">🌸 Slice of Life</button>
+        <button class="gp" data-q="mystery" onclick="filterGenre(this,'mystery','search')">🔍 Mystery</button>
+      </div>
+
+      <div class="player-section" id="playerSection">
+        <div class="player-head"><h3><div class="live-dot"></div><span id="playerLabel">Now Playing</span></h3><button class="close-player" onclick="closePlayer()">✕</button></div>
+        <div class="video-wrap"><iframe id="ytFrame" src="" allow="autoplay;encrypted-media" allowfullscreen></iframe></div>
+        <div class="player-info"><h2 id="playerTitle">—</h2><p id="playerMeta">—</p></div>
+        <div class="ep-scroll" id="epScroll"></div>
+      </div>
+
+      <section>
+        <div class="sec-header"><div class="sec-title" id="gridLabel">Populer Musim Ini</div><a class="see-all" onclick="fetchAnime('','top')">Lihat Semua →</a></div>
+        <div class="anime-grid" id="animeGrid"><div class="spinner"><div class="spin"></div><div class="spin-label">Memuat anime...</div></div></div>
+      </section>
+    </div>
+  </div>
+
+  <div id="mangaPanel">
+    <div class="container">
+      <section>
+        <div class="sec-header"><div class="sec-title">📖 Manga & Manhwa (MangaDex API)</div></div>
+        <div class="manga-search-row">
+          <input class="manga-input" type="text" id="mangaSearch" placeholder="Cari manga / manhwa... (contoh: solo leveling, naruto)">
+          <button class="btn-search" onclick="doMangaSearch()">🔍 Cari</button>
+        </div>
+        <div class="genre-row" id="mangaGenreRow">
+          <button class="gp active" onclick="mangaGenre(this,'solo leveling')">⚔️ Popular</button>
+          <button class="gp" onclick="mangaGenre(this,'naruto')">🍥 Naruto</button>
+          <button class="gp" onclick="mangaGenre(this,'one piece')">🏴‍☠️ One Piece</button>
+          <button class="gp" onclick="mangaGenre(this,'demon slayer')">⚔️ Demon Slayer</button>
+          <button class="gp" onclick="mangaGenre(this,'attack on titan')">🌍 AoT</button>
+          <button class="gp" onclick="mangaGenre(this,'jujutsu kaisen')">💀 JJK</button>
+          <button class="gp" onclick="mangaGenre(this,'romance')">💕 Romance</button>
+          <button class="gp" onclick="mangaGenre(this,'fantasy')">🔮 Fantasy</button>
+        </div>
+        <div class="manga-grid" id="mangaGrid"><div class="spinner"><div class="spin"></div><div class="spin-label">Memuat manga...</div></div></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<footer><div class="container">✦ <span>AniMangaVerse</span> — Data dari Jikan API (MyAnimeList) & MangaDex API &nbsp;|&nbsp; Video trailer YouTube &nbsp;|&nbsp; SFW Content Only</div></footer>
+
+<div class="modal-overlay" id="mangaModal"><div class="manga-modal"><div class="modal-head"><h2 id="modalTitle">Judul Manga</h2><button class="close-modal" onclick="closeModal()">✕</button></div><div class="modal-body" id="modalBody"><div class="spinner"><div class="spin"></div><div class="spin-label">Memuat chapter...</div></div></div></div></div>
+<div class="toast" id="toast"><span>✦</span><span id="toastMsg">Berhasil!</span></div>
+
+<script>
+// ======================= GLOBAL STATE =======================
+let currentTab = 'anime';
+let heroSlide = 0, heroSlidesArr = [], heroTimer = null;
+let chapIds = [], currentChapIdx = 0;
+
+// ======================= HERO DINAMIS DARI API =======================
+async function fetchHeroAnime() {
+  try {
+    const res = await fetch('https://api.jikan.moe/v4/top/anime?limit=3&filter=bypopularity');
+    const data = await res.json();
+    const top3 = data.data || [];
+    if (!top3.length) throw new Error('No data');
+    renderHeroSlides(top3);
+    // update stats (total anime & episode dari hitungan kasar)
+    const countRes = await fetch('https://api.jikan.moe/v4/anime?limit=1');
+    const totalCount = countRes.headers.get('x-total-count') || '10K+';
+    document.getElementById('totalAnimeCount').innerText = totalCount === '10K+' ? '10K+' : totalCount;
+    // estimasi episode (ambil dari top 100)
+    const epRes = await fetch('https://api.jikan.moe/v4/top/anime?limit=100');
+    const epData = await epRes.json();
+    const totalEp = (epData.data || []).reduce((sum, a) => sum + (a.episodes || 0), 0);
+    document.getElementById('totalEpisodeCount').innerText = totalEp > 1000 ? Math.floor(totalEp/1000)+'K+' : totalEp;
+  } catch(e) {
+    console.error(e);
+    document.getElementById('heroSlides').innerHTML = '<div style="padding:100px;text-align:center;">Gagal load hero</div>';
+  }
+}
+
+function renderHeroSlides(animes) {
+  const container = document.getElementById('heroSlides');
+  const indContainer = document.getElementById('heroIndicators');
+  container.innerHTML = '';
+  indContainer.innerHTML = '';
+  heroSlidesArr = animes;
+  animes.forEach((anime, idx) => {
+    const slide = document.createElement('div');
+    slide.className = 'hero-slide' + (idx === 0 ? ' active' : '');
+    const bgImg = anime.images.jpg.large_image_url || '';
+    const title = anime.title_english || anime.title;
+    const score = anime.score || '?';
+    const episodes = anime.episodes || '?';
+    const genres = anime.genres?.map(g=>g.name).slice(0,2).join(', ') || 'Anime';
+    slide.innerHTML = `
+      <div class="hero-bg" style="background-image:url('${bgImg}')"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-tag">🔥 Trending #${idx+1}</div>
+        <h1 class="hero-title">${title.split(' ').slice(0,2).join(' ')}<br><span class="hl">${title.split(' ').slice(2).join(' ') || ' '}</span></h1>
+        <div class="hero-meta"><span class="s">★ ${score}</span><span>${anime.year || '2024'}</span><span>${episodes} Ep</span><span>${genres}</span></div>
+        <p class="hero-desc">${anime.synopsis?.substring(0,120) || 'Anime populer dari MyAnimeList.'}...</p>
+        <div class="hero-btns">
+          <button class="btn-play" onclick="playAnime(${JSON.stringify(anime).replace(/"/g, '&quot;')})">▶ Tonton Trailer</button>
+          <button class="btn-more">+ Watchlist</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(slide);
+    const ind = document.createElement('div');
+    ind.className = 'ind' + (idx === 0 ? ' active' : '');
+    ind.onclick = () => goHero(idx);
+    indContainer.appendChild(ind);
+  });
+  heroSlide = 0;
+  if (heroTimer) clearInterval(heroTimer);
+  heroTimer = setInterval(() => goHero(heroSlide + 1), 5500);
+}
+
+function goHero(n) {
+  const slides = document.querySelectorAll('.hero-slide');
+  const inds = document.querySelectorAll('.ind');
+  if (!slides.length) return;
+  slides[heroSlide].classList.remove('active');
+  inds[heroSlide].classList.remove('active');
+  heroSlide = (n + slides.length) % slides.length;
+  slides[heroSlide].classList.add('active');
+  inds[heroSlide].classList.add('active');
+}
+
+// ======================= TAB SWITCH =======================
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tabAnimeBtn').classList.toggle('active', tab === 'anime');
+  document.getElementById('tabMangaBtn').classList.toggle('active', tab === 'manga');
+  document.getElementById('animePanel').style.display = tab === 'anime' ? '' : 'none';
+  document.getElementById('mangaPanel').classList.toggle('visible', tab === 'manga');
+  document.getElementById('animeHero').style.display = tab === 'anime' ? '' : 'none';
+  if (tab === 'manga' && document.getElementById('mangaGrid').innerHTML.includes('spinner')) {
+    searchManga('solo leveling');
+  }
+}
+
+// ======================= ANIME =======================
+async function fetchAnime(query, mode = 'top') {
+  const grid = document.getElementById('animeGrid');
+  grid.innerHTML = '<div class="spinner"><div class="spin"></div><div class="spin-label">Memuat anime...</div></div>';
+  try {
+    let url;
+    if (mode === 'top') url = 'https://api.jikan.moe/v4/top/anime?limit=24&filter=bypopularity';
+    else url = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}&limit=24&sfw=true&order_by=score&sort=desc`;
+    const res = await fetch(url);
+    const data = await res.json();
+    renderAnime(data.data || []);
+  } catch(e) {
+    grid.innerHTML = '<div style="padding:40px;color:var(--muted);text-align:center;">Gagal memuat. Coba lagi.</div>';
+  }
+}
+
+function renderAnime(list) {
+  const grid = document.getElementById('animeGrid');
+  if (!list.length) { grid.innerHTML = '<div style="padding:40px;color:var(--muted);">Tidak ada hasil.</div>'; return; }
+  grid.innerHTML = '';
+  list.forEach((a, i) => {
+    const img = a.images?.jpg?.large_image_url || '';
+    const title = a.title_english || a.title || 'Unknown';
+    const score = a.score || '?';
+    const eps = a.episodes || '?';
+    const genre = a.genres?.[0]?.name || 'Anime';
+    const card = document.createElement('div');
+    card.className = 'anime-card';
+    card.style.animationDelay = `${i * 0.04}s`;
+    card.innerHTML = `
+      <div class="card-poster">
+        ${img ? `<img src="${img}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'card-poster-placeholder\\'>${getEmoji(genre)}</div>'">`
+              : `<div class="card-poster-placeholder">${getEmoji(genre)}</div>`}
+        <div class="ceps">📺 ${eps}</div>
+        <div class="cov"><div class="play-circle">▶</div></div>
+      </div>
+      <div class="card-info">
+        <h3>${title}</h3>
+        <div class="card-meta"><span>${genre}</span><span class="cr">★ ${score}</span></div>
+      </div>
+    `;
+    card.onclick = () => playAnime(a);
+    grid.appendChild(card);
+  });
+}
+
+function getEmoji(g) {
+  const map = {Action:'⚔️',Fantasy:'🔮',Romance:'💕',Horror:'👻',Comedy:'😄',Sports:'⚽',Isekai:'🌀',Mecha:'🤖',Mystery:'🔍','Slice of Life':'🌸'};
+  return map[g] || '🌸';
+}
+
+function playAnime(a) {
+  const title = a.title_english || a.title || 'Anime';
+  const query = encodeURIComponent(title + ' official trailer');
+  document.getElementById('playerLabel').textContent = title.toUpperCase();
+  document.getElementById('playerTitle').textContent = title;
+  document.getElementById('playerMeta').innerHTML = `★ ${a.score || '?'} / 10  •  ${a.episodes || '?'} Episode  •  ${a.genres?.map(g=>g.name).join(', ') || 'Anime'}`;
+  document.getElementById('ytFrame').src = `https://www.youtube.com/embed?listType=search&list=${query}&autoplay=1&rel=0&modestbranding=1`;
+  const sc = document.getElementById('epScroll');
+  sc.innerHTML = '';
+  const total = Math.min(a.episodes || 12, 26);
+  for (let i = 1; i <= total; i++) {
+    const b = document.createElement('button');
+    b.className = 'ep-btn' + (i===1?' active':'');
+    b.textContent = `Ep ${i}`;
+    b.onclick = () => {
+      document.querySelectorAll('.ep-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      const q2 = encodeURIComponent(title + ` episode ${i}`);
+      document.getElementById('ytFrame').src = `https://www.youtube.com/embed?listType=search&list=${q2}&autoplay=1&rel=0`;
+      showToast(`Episode ${i} — ${title}`);
+    };
+    sc.appendChild(b);
+  }
+  const sec = document.getElementById('playerSection');
+  sec.classList.add('visible');
+  setTimeout(() => sec.scrollIntoView({behavior:'smooth',block:'start'}), 100);
+  showToast(`▶ Memainkan: ${title}`);
+}
+
+function closePlayer() {
+  document.getElementById('ytFrame').src = '';
+  document.getElementById('playerSection').classList.remove('visible');
+}
+
+function filterGenre(btn, query, mode) {
+  document.querySelectorAll('#genreRow .gp').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('gridLabel').innerHTML = query === 'popular' ? 'Populer Musim Ini' : `Genre: ${query.charAt(0).toUpperCase()+query.slice(1)}`;
+  fetchAnime(query, mode);
+  closePlayer();
+}
+
+// ======================= NAV SEARCH =======================
+function doNavSearch() {
+  const q = document.getElementById('navSearch').value.trim();
+  if (!q) return;
+  if (currentTab === 'anime') {
+    fetchAnime(q, 'search');
+    document.getElementById('gridLabel').innerHTML = `Hasil: "${q}"`;
+    closePlayer();
+    showToast('Mencari: ' + q);
+  } else {
+    document.getElementById('mangaSearch').value = q;
+    searchManga(q);
+    showToast('Mencari manga: ' + q);
+  }
+}
+document.getElementById('navSearch').addEventListener('keypress', e => { if(e.key==='Enter') doNavSearch(); });
+
+// ======================= MANGA =======================
+async function searchManga(query) {
+  const grid = document.getElementById('mangaGrid');
+  grid.innerHTML = '<div class="spinner"><div class="spin"></div><div class="spin-label">Mencari manga...</div></div>';
+  try {
+    const url = `https://api.mangadex.org/manga?title=${encodeURIComponent(query)}&limit=24&includes[]=cover_art&contentRating[]=safe&order[relevance]=desc`;
+    const res = await fetch(url);
+    const data = await res.json();
+    renderManga(data.data || []);
+  } catch(e) {
+    grid.innerHTML = '<div style="padding:40px;color:var(--muted);text-align:center;">Gagal memuat manga.</div>';
+  }
+}
+
+function renderManga(list) {
+  const grid = document.getElementById('mangaGrid');
+  if (!list.length) { grid.innerHTML = '<div style="padding:40px;color:var(--muted);">Tidak ditemukan.</div>'; return; }
+  grid.innerHTML = '';
+  list.forEach((m, i) => {
+    const attrs = m.attributes;
+    const title = attrs.title.en || Object.values(attrs.title)[0] || 'No title';
+    const coverRel = m.relationships.find(r => r.type === 'cover_art');
+    const coverFile = coverRel?.attributes?.fileName;
+    const cover = coverFile ? `https://uploads.mangadex.org/covers/${m.id}/${coverFile}.256.jpg` : '';
+    const status = attrs.status || '';
+    const card = document.createElement('div');
+    card.className = 'anime-card';
+    card.style.animationDelay = `${i*0.04}s`;
+    card.innerHTML = `
+      <div class="card-poster">
+        ${cover ? `<img src="${cover}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'card-poster-placeholder\\'>📖</div>'">`
+                : `<div class="card-poster-placeholder">📖</div>`}
+        <div class="cbadge">MANGA</div>
+        ${status ? `<div class="ceps">${status}</div>` : ''}
+        <div class="cov"><div class="play-circle">📖</div></div>
+      </div>
+      <div class="card-info"><h3>${title.substring(0,36)}</h3><div class="card-meta"><span>${attrs.year||'—'}</span><span class="cr">✦ SFW</span></div></div>
+    `;
+    card.onclick = () => openMangaReader(m.id, title);
+    grid.appendChild(card);
+  });
+}
+
+function doMangaSearch() {
+  const q = document.getElementById('mangaSearch').value.trim();
+  if (q) searchManga(q);
+}
+document.getElementById('mangaSearch').addEventListener('keypress', e => { if(e.key==='Enter') doMangaSearch(); });
+
+function mangaGenre(btn, q) {
+  document.querySelectorAll('#mangaGenreRow .gp').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('mangaSearch').value = q;
+  searchManga(q);
+}
+
+// ======================= MANGA READER =======================
+async function openMangaReader(id, title) {
+  chapIds = []; currentChapIdx = 0;
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = '<div class="spinner"><div class="spin"></div><div class="spin-label">Memuat chapter...</div></div>';
+  document.getElementById('mangaModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  try {
+    const res = await fetch(`https://api.mangadex.org/chapter?manga=${id}&limit=50&order[chapter]=asc&translatedLanguage[]=en&contentRating[]=safe`);
+    const data = await res.json();
+    const chapters = data.data || [];
+    if (!chapters.length) { document.getElementById('modalBody').innerHTML = '<div style="padding:32px;text-align:center;">Tidak ada chapter bahasa Inggris.</div>'; return; }
+    chapIds = chapters.map(c => ({ id: c.id, num: c.attributes.chapter || '?' }));
+    renderChapterList(chapIds);
+  } catch(e) { document.getElementById('modalBody').innerHTML = '<div style="padding:32px;">Error memuat chapter.</div>'; }
+}
+
+function renderChapterList(chaps) {
+  let html = `<div style="margin-bottom:12px;">📚 ${chaps.length} chapter</div><div class="chap-list">`;
+  chaps.slice(0,60).forEach((c, i) => { html += `<button class="chap-btn" onclick="readChapter(${i})">Ch. ${c.num}</button>`; });
+  if (chaps.length>60) html += `<button class="chap-btn" style="opacity:0.4">+${chaps.length-60} lagi</button>`;
+  html += '</div><div id="chapterViewer" class="chapter-viewer"></div><div class="nav-arrows"><button class="arr-btn" id="prevChap" onclick="navChap(-1)" disabled>← Prev</button><button class="arr-btn" id="nextChap" onclick="navChap(1)">Next →</button></div>';
+  document.getElementById('modalBody').innerHTML = html;
+  readChapter(0);
+}
+
+async function readChapter(idx) {
+  currentChapIdx = idx;
+  const chap = chapIds[idx];
+  if (!chap) return;
+  document.querySelectorAll('.chap-btn').forEach((b,i)=>b.classList.toggle('active', i===idx));
+  document.getElementById('prevChap').disabled = idx===0;
+  document.getElementById('nextChap').disabled = idx>=chapIds.length-1;
+  const viewer = document.getElementById('chapterViewer');
+  viewer.innerHTML = '<div class="spinner"><div class="spin"></div><div class="spin-label">Memuat halaman...</div></div>';
+  try {
+    const res = await fetch(`https://api.mangadex.org/at-home/server/${chap.id}`);
+    const data = await res.json();
+    const base = data.baseUrl, hash = data.chapter.hash, pages = data.chapter.data || [];
+    if (!pages.length) { viewer.innerHTML = '<div>Tidak ada halaman.</div>'; return; }
+    viewer.innerHTML = `<div style="text-align:center;margin-bottom:16px;">CHAPTER ${chap.num} — ${pages.length} halaman</div>`;
+    pages.forEach(p => { const img = document.createElement('img'); img.src = `${base}/data/${hash}/${p}`; img.loading='lazy'; viewer.appendChild(img); });
+    showToast(`📖 Chapter ${chap.num}`);
+  } catch(e) { viewer.innerHTML = '<div>Gagal memuat halaman.</div>'; }
+}
+
+function navChap(dir) { const n = currentChapIdx + dir; if (n>=0 && n<chapIds.length) readChapter(n); }
+function closeModal() { document.getElementById('mangaModal').classList.remove('open'); document.body.style.overflow = ''; }
+document.getElementById('mangaModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ======================= INIT =======================
+fetchHeroAnime();
+fetchAnime('', 'top');
+</script>
+</body>
+</html>
